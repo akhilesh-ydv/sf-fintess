@@ -117,7 +117,7 @@ Placeholders in `index.html`:
 
 - name **Amit Kumar** (title, meta description, brand, about heading, footer
   copyright) and the `AK` monogram in `assets/img/favicon.svg`
-- phone `+91 98765 43210`, email `amit@akfitness.in`, handle `@amitkumar.fit`
+- phone `+91 98765 43210`, email `amit@akfitness.in`, handle `@flowline.bosss`
 - the `#` social links in the header and footer
 - prices — ₹799 / ₹1,499 / ₹2,499 per session, written as `&#8377;` entities
 - the two testimonials (Rahul Verma, Sneha Kulkarni)
