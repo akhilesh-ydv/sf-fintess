@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 700" width="1600" height="700" role="img" aria-label="Gym floor placeholder">
+  <defs>
+    <linearGradient id="cbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#191920"/>
+      <stop offset="1" stop-color="#060608"/>
+    </linearGradient>
+    <radialGradient id="cspot" cx="50%" cy="20%" r="70%">
+      <stop offset="0" stop-color="#5b5b68" stop-opacity=".4"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="cbeam" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff1f45" stop-opacity=".4"/>
+      <stop offset="1" stop-color="#ff1f45" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="cgrain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+    <filter id="csoft"><feGaussianBlur stdDeviation="22"/></filter>
+  </defs>
+
+  <rect width="1600" height="700" fill="url(#cbg)"/>
+  <rect width="1600" height="700" fill="url(#cspot)"/>
+  <polygon points="700,-40 980,-40 900,700 760,700" fill="url(#cbeam)" opacity=".3"/>
+
+  <!-- row of dumbbells on the floor -->
+  <g>
+    <ellipse cx="800" cy="596" rx="620" ry="30" fill="#000" opacity=".55" filter="url(#csoft)"/>
+    <g fill="#141419" stroke="#2b2b33" stroke-width="6">
+      <g transform="translate(220 560)">
+        <rect x="-70" y="-9" width="140" height="18" rx="9"/>
+        <rect x="-104" y="-34" width="36" height="68" rx="10"/>
+        <rect x="68" y="-34" width="36" height="68" rx="10"/>
+      </g>
+      <g transform="translate(560 560) scale(1.15)">
+        <rect x="-70" y="-9" width="140" height="18" rx="9"/>
+        <rect x="-104" y="-34" width="36" height="68" rx="10"/>
+        <rect x="68" y="-34" width="36" height="68" rx="10"/>
+      </g>
+      <g transform="translate(960 560) scale(1.3)">
+        <rect x="-70" y="-9" width="140" height="18" rx="9"/>
+        <rect x="-104" y="-34" width="36" height="68" rx="10"/>
+        <rect x="68" y="-34" width="36" height="68" rx="10"/>
+      </g>
+      <g transform="translate(1360 560) scale(1.45)">
+        <rect x="-70" y="-9" width="140" height="18" rx="9"/>
+        <rect x="-104" y="-34" width="36" height="68" rx="10"/>
+        <rect x="68" y="-34" width="36" height="68" rx="10"/>
+      </g>
+    </g>
+    <g fill="none" stroke="#ff1f45" stroke-width="3" opacity=".45">
+      <path d="M116 526 h36 M456 526 h42 M856 526 h46 M1256 526 h52"/>
+    </g>
+  </g>
+
+  <!-- wall rails -->
+  <g stroke="#212129" stroke-width="6" opacity=".7">
+    <path d="M0 180 H1600 M0 226 H1600"/>
+  </g>
+
+  <rect width="1600" height="700" filter="url(#cgrain)" opacity=".07"/>
+</svg>

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-label="Private training placeholder">
+  <defs>
+    <linearGradient id="p2bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1c1c23"/>
+      <stop offset="1" stop-color="#07070a"/>
+    </linearGradient>
+    <radialGradient id="p2spot" cx="40%" cy="34%" r="60%">
+      <stop offset="0" stop-color="#5d5d69" stop-opacity=".5"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="p2fig" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3a3a45"/>
+      <stop offset="1" stop-color="#101015"/>
+    </linearGradient>
+    <linearGradient id="p2steel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a5a65"/>
+      <stop offset="1" stop-color="#191920"/>
+    </linearGradient>
+    <filter id="p2grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+    <filter id="p2soft"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#p2bg)"/>
+  <rect width="1200" height="900" fill="url(#p2spot)"/>
+
+  <!-- rack -->
+  <g stroke="#25252d" stroke-width="14" fill="none">
+    <path d="M250 140 V760 M950 140 V760"/>
+    <path d="M250 220 H950"/>
+  </g>
+  <rect x="0" y="756" width="1200" height="6" fill="#ff1f45" opacity=".3"/>
+  <ellipse cx="600" cy="782" rx="380" ry="26" fill="#000" opacity=".55" filter="url(#p2soft)"/>
+
+  <!-- lifter on bench, coach spotting -->
+  <g fill="url(#p2fig)">
+    <!-- bench -->
+    <rect x="420" y="560" width="360" height="34" rx="14" fill="#1b1b22"/>
+    <rect x="470" y="594" width="26" height="150" fill="#16161c"/>
+    <rect x="704" y="594" width="26" height="150" fill="#16161c"/>
+    <!-- lifter torso -->
+    <path d="M470 560 h250 c30 0 44 -20 40 -46 l-10 -58 c-6 -34 -34 -52 -74 -52 h-160 c-40 0 -64 20 -68 54 l-8 56 c-4 26 10 46 30 46 z"/>
+    <circle cx="742" cy="446" r="38"/>
+    <!-- arms up -->
+    <path d="M560 408 l-16 -96 h26 l26 88 z"/>
+    <path d="M660 408 l16 -96 h-26 l-26 88 z"/>
+    <!-- coach standing behind -->
+    <g transform="translate(880 0)">
+      <circle cx="0" cy="290" r="42"/>
+      <path d="M0 336 c48 0 78 30 84 80 l12 118 c3 24 -14 40 -38 40 h-116 c-24 0 -40 -16 -38 -40 l12 -118 c6 -50 36 -80 84 -80 z"/>
+      <path d="M-70 360 l-70 -78 l18 -16 l72 74 z"/>
+      <path d="M-56 574 h44 l-8 176 c-2 20 -40 20 -42 0 z"/>
+      <path d="M6 574 h44 l6 176 c2 20 -36 20 -40 0 z"/>
+    </g>
+  </g>
+
+  <!-- barbell overhead -->
+  <g transform="translate(600 290)">
+    <rect x="-330" y="-8" width="660" height="16" rx="8" fill="url(#p2steel)"/>
+    <g fill="#101015" stroke="#31313a" stroke-width="4">
+      <circle cx="-300" cy="0" r="76"/>
+      <circle cx="300" cy="0" r="76"/>
+    </g>
+    <g fill="none" stroke="#ff1f45" stroke-width="4" opacity=".7">
+      <circle cx="-300" cy="0" r="76"/>
+      <circle cx="300" cy="0" r="76"/>
+    </g>
+    <g fill="#0b0b0e">
+      <circle cx="-300" cy="0" r="20"/>
+      <circle cx="300" cy="0" r="20"/>
+    </g>
+  </g>
+
+  <rect width="1200" height="900" filter="url(#p2grain)" opacity=".08"/>
+</svg>

@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-label="Pro training placeholder">
+  <defs>
+    <linearGradient id="p3bg" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1e1e25"/>
+      <stop offset="1" stop-color="#07070a"/>
+    </linearGradient>
+    <radialGradient id="p3spot" cx="62%" cy="30%" r="60%">
+      <stop offset="0" stop-color="#5a5a66" stop-opacity=".48"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="p3fig" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3c3c47"/>
+      <stop offset="1" stop-color="#101016"/>
+    </linearGradient>
+    <linearGradient id="p3steel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5e5e6a"/>
+      <stop offset="1" stop-color="#1a1a21"/>
+    </linearGradient>
+    <filter id="p3grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+    <filter id="p3soft"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#p3bg)"/>
+  <rect width="1200" height="900" fill="url(#p3spot)"/>
+
+  <!-- plate tree -->
+  <g opacity=".85">
+    <rect x="120" y="300" width="18" height="440" fill="#1e1e25"/>
+    <g fill="#141419" stroke="#2c2c34" stroke-width="6">
+      <circle cx="129" cy="380" r="62"/>
+      <circle cx="129" cy="510" r="54"/>
+      <circle cx="129" cy="622" r="44"/>
+    </g>
+    <g fill="none" stroke="#ff1f45" stroke-width="3" opacity=".5">
+      <circle cx="129" cy="380" r="24"/>
+      <circle cx="129" cy="510" r="20"/>
+      <circle cx="129" cy="622" r="16"/>
+    </g>
+  </g>
+
+  <rect x="0" y="756" width="1200" height="6" fill="#ff1f45" opacity=".28"/>
+  <ellipse cx="700" cy="784" rx="360" ry="26" fill="#000" opacity=".55" filter="url(#p3soft)"/>
+
+  <!-- deadlift figure -->
+  <g fill="url(#p3fig)" transform="translate(700 0)">
+    <circle cx="30" cy="330" r="46"/>
+    <path d="M-40 380 c0 -42 40 -66 92 -62 l72 6 c40 4 58 30 52 66 l-12 74 c-6 34 -36 52 -78 48 l-84 -8 c-38 -4 -50 -30 -44 -64 z"/>
+    <!-- arms straight down to bar -->
+    <path d="M-30 424 l-16 194 h26 l22 -186 z"/>
+    <path d="M120 430 l18 190 h-26 l-22 -184 z"/>
+    <!-- hips and legs -->
+    <path d="M-58 500 c-34 6 -46 34 -40 66 l16 88 h68 l-6 -140 z"/>
+    <path d="M-84 654 h60 l4 100 c1 20 -44 20 -46 0 z"/>
+    <path d="M40 640 h56 l10 114 c2 20 -42 20 -46 0 z"/>
+  </g>
+
+  <!-- barbell on floor -->
+  <g transform="translate(700 660)">
+    <rect x="-300" y="-7" width="600" height="14" rx="7" fill="url(#p3steel)"/>
+    <g fill="#111116" stroke="#31313a" stroke-width="5">
+      <circle cx="-270" cy="0" r="92"/>
+      <circle cx="270" cy="0" r="92"/>
+    </g>
+    <g fill="none" stroke="#ff1f45" stroke-width="4" opacity=".65">
+      <circle cx="-270" cy="0" r="92"/>
+      <circle cx="270" cy="0" r="92"/>
+    </g>
+    <g fill="#0a0a0d">
+      <circle cx="-270" cy="0" r="22"/>
+      <circle cx="270" cy="0" r="22"/>
+    </g>
+  </g>
+
+  <rect width="1200" height="900" filter="url(#p3grain)" opacity=".08"/>
+</svg>

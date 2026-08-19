@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Gym interior">
+  <defs>
+    <linearGradient id="hbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1b1b20"/>
+      <stop offset="55%" stop-color="#101013"/>
+      <stop offset="1" stop-color="#08080a"/>
+    </linearGradient>
+    <radialGradient id="hspot" cx="34%" cy="30%" r="60%">
+      <stop offset="0" stop-color="#4a4a55" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hbeam" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff1f45" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#ff1f45" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="hsteel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#54545e"/>
+      <stop offset="50%" stop-color="#2b2b31"/>
+      <stop offset="1" stop-color="#15151a"/>
+    </linearGradient>
+    <filter id="hgrain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+    <filter id="hblur"><feGaussianBlur stdDeviation="26"/></filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#hbg)"/>
+  <rect width="1600" height="900" fill="url(#hspot)"/>
+
+  <!-- light beams -->
+  <g opacity=".5">
+    <polygon points="1180,-60 1520,-60 900,900 660,900" fill="url(#hbeam)" opacity=".35"/>
+    <polygon points="120,-60 260,-60 60,900 -60,900" fill="url(#hbeam)" opacity=".2"/>
+  </g>
+
+  <!-- back rack structure -->
+  <g stroke="#26262c" stroke-width="10" fill="none" opacity=".85">
+    <path d="M240 120 V820 M420 120 V820 M1180 120 V820 M1360 120 V820"/>
+    <path d="M240 200 H420 M240 380 H420 M240 560 H420 M1180 200 H1360 M1180 380 H1360 M1180 560 H1360"/>
+  </g>
+  <g stroke="#1d1d22" stroke-width="6" opacity=".7">
+    <path d="M0 830 H1600"/>
+  </g>
+
+  <!-- floor glow -->
+  <ellipse cx="800" cy="838" rx="520" ry="46" fill="#000" opacity=".55" filter="url(#hblur)"/>
+
+  <!-- barbell -->
+  <g transform="translate(800 470)">
+    <rect x="-560" y="-9" width="1120" height="18" rx="9" fill="url(#hsteel)"/>
+    <g fill="#101014" stroke="#2e2e35" stroke-width="4">
+      <rect x="-560" y="-96" width="46" height="192" rx="10"/>
+      <rect x="-506" y="-78" width="34" height="156" rx="9"/>
+      <rect x="514" y="-96" width="46" height="192" rx="10"/>
+      <rect x="472" y="-78" width="34" height="156" rx="9"/>
+    </g>
+    <g fill="none" stroke="#ff1f45" stroke-width="4" opacity=".75">
+      <rect x="-560" y="-96" width="46" height="192" rx="10"/>
+      <rect x="514" y="-96" width="46" height="192" rx="10"/>
+    </g>
+    <g fill="#1a1a1f" stroke="#33333b" stroke-width="3">
+      <rect x="-452" y="-26" width="30" height="52" rx="6"/>
+      <rect x="422" y="-26" width="30" height="52" rx="6"/>
+    </g>
+  </g>
+
+  <!-- plate stacks -->
+  <g opacity=".9">
+    <g transform="translate(300 720)">
+      <circle r="86" fill="#141418" stroke="#2b2b32" stroke-width="8"/>
+      <circle r="30" fill="#0c0c0f" stroke="#ff1f45" stroke-width="3" opacity=".8"/>
+    </g>
+    <g transform="translate(1310 740)">
+      <circle r="66" fill="#141418" stroke="#2b2b32" stroke-width="7"/>
+      <circle r="23" fill="#0c0c0f" stroke="#ff1f45" stroke-width="3" opacity=".7"/>
+    </g>
+  </g>
+
+  <rect width="1600" height="900" filter="url(#hgrain)" opacity=".07"/>
+  <rect width="1600" height="900" fill="url(#hspot)" opacity=".35"/>
+</svg>

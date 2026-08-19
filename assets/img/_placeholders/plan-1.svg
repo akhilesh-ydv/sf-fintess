@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-label="Group training placeholder">
+  <defs>
+    <linearGradient id="p1bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a1a20"/>
+      <stop offset="1" stop-color="#08080b"/>
+    </linearGradient>
+    <radialGradient id="p1spot" cx="50%" cy="26%" r="62%">
+      <stop offset="0" stop-color="#55555f" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="p1fig" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#34343d"/>
+      <stop offset="1" stop-color="#111116"/>
+    </linearGradient>
+    <filter id="p1grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+    <filter id="p1soft"><feGaussianBlur stdDeviation="16"/></filter>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#p1bg)"/>
+  <rect width="1200" height="900" fill="url(#p1spot)"/>
+
+  <!-- mirrored wall lines -->
+  <g stroke="#22222a" stroke-width="5" opacity=".7">
+    <path d="M0 210 H1200 M0 250 H1200"/>
+  </g>
+  <rect x="0" y="700" width="1200" height="5" fill="#ff1f45" opacity=".28"/>
+
+  <!-- three figures overhead press -->
+  <g fill="url(#p1fig)">
+    <ellipse cx="600" cy="742" rx="440" ry="26" fill="#000" opacity=".55" filter="url(#p1soft)"/>
+
+    <g transform="translate(300 0) scale(.92)">
+      <circle cx="0" cy="330" r="44"/>
+      <path d="M0 378 c54 0 88 34 94 88 l10 96 c3 26 -14 42 -40 42 h-128 c-26 0 -42 -16 -40 -42 l10 -96 c6 -54 40 -88 94 -88 z"/>
+      <path d="M-72 402 l-34 -104 h22 l40 92 z"/>
+      <path d="M72 402 l34 -104 h-22 l-40 92 z"/>
+      <path d="M-52 604 h44 l-8 156 c-2 20 -40 20 -42 0 z"/>
+      <path d="M8 604 h44 l6 156 c2 20 -36 20 -40 0 z"/>
+      <rect x="-150" y="278" width="300" height="14" rx="7" fill="#3d3d47"/>
+    </g>
+
+    <g transform="translate(600 20)">
+      <circle cx="0" cy="330" r="46"/>
+      <path d="M0 380 c56 0 92 36 98 92 l10 100 c3 26 -14 42 -42 42 h-132 c-28 0 -45 -16 -42 -42 l10 -100 c6 -56 42 -92 98 -92 z"/>
+      <path d="M-76 404 l-36 -110 h24 l42 98 z"/>
+      <path d="M76 404 l36 -110 h-24 l-42 98 z"/>
+      <path d="M-54 620 h46 l-8 150 c-2 20 -42 20 -44 0 z"/>
+      <path d="M8 620 h46 l6 150 c2 20 -38 20 -42 0 z"/>
+      <rect x="-158" y="274" width="316" height="15" rx="8" fill="#43434e"/>
+    </g>
+
+    <g transform="translate(900 6) scale(.88)">
+      <circle cx="0" cy="330" r="44"/>
+      <path d="M0 378 c54 0 88 34 94 88 l10 96 c3 26 -14 42 -40 42 h-128 c-26 0 -42 -16 -40 -42 l10 -96 c6 -54 40 -88 94 -88 z"/>
+      <path d="M-72 402 l-34 -104 h22 l40 92 z"/>
+      <path d="M72 402 l34 -104 h-22 l-40 92 z"/>
+      <path d="M-52 604 h44 l-8 156 c-2 20 -40 20 -42 0 z"/>
+      <path d="M8 604 h44 l6 156 c2 20 -36 20 -40 0 z"/>
+      <rect x="-150" y="278" width="300" height="14" rx="7" fill="#3d3d47"/>
+    </g>
+  </g>
+
+  <g fill="none" stroke="#ff1f45" stroke-width="4" opacity=".5">
+    <path d="M646 330 a46 46 0 0 0 -46 -46"/>
+    <path d="M394 330 a44 44 0 0 0 -44 -44"/>
+  </g>
+
+  <rect width="1200" height="900" filter="url(#p1grain)" opacity=".08"/>
+</svg>
