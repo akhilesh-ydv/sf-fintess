@@ -36,7 +36,8 @@
 
 *,*::before,*::after{ box-sizing:border-box; }
 
-html{ scroll-behavior:smooth; }
+/* body alone does not stop sideways scrolling on every mobile browser */
+html{ scroll-behavior:smooth; overflow-x:hidden; }
 
 body{
   margin:0;
@@ -245,7 +246,7 @@ h1,h2,h3,h4{ margin:0; font-family:var(--font-display); }
   position:absolute;
   inset:0;
   z-index:-2;
-  background-image:url('../img/hero.jpg');
+  background-image:url('../img/hero.jpg?v=2');
   background-size:cover;
   background-position:center;
   transform:scale(1.06);
@@ -657,7 +658,7 @@ h1,h2,h3,h4{ margin:0; font-family:var(--font-display); }
   position:absolute;
   inset:0;
   z-index:-2;
-  background-image:url('../img/cta.jpg');
+  background-image:url('../img/cta.jpg?v=2');
   background-size:cover;
   background-position:center;
 }
@@ -756,7 +757,7 @@ h1,h2,h3,h4{ margin:0; font-family:var(--font-display); }
   .header-inner .header-social{ display:none; }
 
   /* phone-shaped crop of the hero photo - the landscape one zooms in too far */
-  .hero-media{ background-image:url('../img/hero-mobile.jpg'); }
+  .hero-media{ background-image:url('../img/hero-mobile.jpg?v=2'); }
   .hero-inner{ padding-top:96px; padding-bottom:48px; }
 
   /* centre the portrait and keep its crimson frame inside the screen */
@@ -809,7 +810,11 @@ h1,h2,h3,h4{ margin:0; font-family:var(--font-display); }
 
 @media (max-width:480px){
   .shell{ padding-inline:18px; }
-  .btn{ width:100%; }
+  /* the hero pill stays compact and centred - stretching it edge to edge
+     reads as a bar, not a button. Card CTAs stay full-width blocks. */
+  .btn{ padding:15px 32px; }
+  .btn-soft,
+  .ig-follow{ width:100%; }
   .hero-title{ letter-spacing:.035em; line-height:1.34; }
   .figure-frame::before{ inset:12px -12px -12px 12px; }
   .plan-card{ padding:26px 22px; }
