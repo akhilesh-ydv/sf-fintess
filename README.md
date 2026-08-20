@@ -54,7 +54,9 @@ The trainer is male and Indian in every shot, matching the Amit Kumar brand.
 | `plan-2.jpg` | 1280×860 | trainer with a trainee, Indian gym | 16640766 |
 | `plan-3.jpg` | 1280×860 | trainer and trainee, dumbbells | 12931805 |
 | `cta.jpg` | 1920×900 | dumbbell curl, b&w | 1229356 |
-| `social-1..6.jpg` | 700×700 | Instagram grid tiles | 13993016, 10795063, 13436331, 11800270, 14316237, 12600444 |
+| `reel-1..3.jpg` | 639×639 | real reel thumbnails from Instagram | — |
+| `ig-avatar.jpg` | 100×100 | real Instagram profile picture | — |
+| `hero-mobile.jpg` | 900×1400 | portrait hero crop for phones | 13756380 |
 | `avatar-1/2.svg` | 200×200 | testimonial faces (generated) | — |
 
 Any photo can be re-fetched or re-cropped from Pexels' CDN by changing the URL
@@ -96,7 +98,7 @@ All colors live in `:root` at the top of `style.css`:
 
 ## Instagram section
 
-The `#social` section is a **static mock** of an Instagram feed — six tiles in a
+The `#social` section shows three real reels from **instagram.com/flowline.bosss**.
 mosaic (one 2×2 feature), reel badges, and like/comment counts that appear on
 hover. Nothing calls Instagram's API, so the numbers (128K followers, likes,
 comments) are hand-written placeholders in `index.html`.
