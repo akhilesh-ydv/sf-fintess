@@ -9,7 +9,7 @@ index.html                 single-page site (all sections)
                            Instagram grid, CTA, footer
 assets/css/style.css       theme + layout
 assets/js/main.js          sticky header, mobile menu, scroll reveal, active nav
-assets/img/*.jpg           photos cropped out of the reference
+assets/img/*.jpg           site photos (Pexels) + Instagram reel thumbnails
 assets/img/avatar-*.svg    testimonial avatars (generated)
 assets/img/_placeholders/  the original generated SVG art, unused - safe to delete
 .htaccess                  clean URLs (Apache)
@@ -98,20 +98,50 @@ All colors live in `:root` at the top of `style.css`:
 
 ## Instagram section
 
-The `#social` section shows three real reels from **instagram.com/flowline.bosss**.
-mosaic (one 2×2 feature), reel badges, and like/comment counts that appear on
-hover. Nothing calls Instagram's API, so the numbers (128K followers, likes,
-comments) are hand-written placeholders in `index.html`.
+The `#social` section shows three real reels from
+**instagram.com/flowline.bosss** in a mosaic — one 2×2 feature tile plus two
+singles — each linking to its own post.
 
-To make it show real posts, either:
+### How the thumbnails got here
 
-- swap `assets/img/social-*.jpg` for screenshots of actual posts and point each
-  `<a href="#">` at the post URL — simplest, no API, no rate limits; or
-- use an embed widget (Elfsight, Behold, LightWidget) or Instagram's own
-  oEmbed / Graph API, which needs a Facebook app and a business account.
+Instagram's profile listing is behind a login wall: `curl` on the profile, its
+`/embed/`, and `?__a=1` all return a login shell with zero post data, and
+`web_profile_info` rate-limits. What *does* work is the official **per-post
+embed** — `instagram.com/p/<shortcode>/embed/captioned/` — rendered in a real
+browser, since it builds the post client-side with JavaScript.
 
-The tile markup is plain `<a>` + `<img>`, so replacing the grid with a widget's
-embed code is a drop-in change.
+So the thumbnails in `reel-*.jpg` and `ig-avatar.jpg` were pulled by loading
+those embeds in headless Chrome and reading the rendered image URLs. They are
+now served from this site, which keeps the page fast but means **they do not
+update when new reels are posted**.
+
+### Adding or replacing a reel
+
+1. Copy the post link from Instagram (⋯ → Copy link).
+2. Save its thumbnail as `assets/img/reel-N.jpg`.
+3. Copy an existing `<a class="ig-tile is-reel">` block in `index.html`, point
+   `href` at the post and `src` at the new image.
+
+Add `is-feature` to whichever tile should be the big one. The grid fills
+cleanly at 3 tiles (feature + 2) or 6 (feature + 5).
+
+For a feed that updates itself, use an embed widget (Behold, Elfsight,
+LightWidget) or the Instagram Graph API — the latter needs a Business/Creator
+account linked to a Facebook Page plus a Meta developer app.
+
+### No invented numbers
+
+There are deliberately no follower or like counts. The account currently has 20
+posts and 32 followers, so the placeholder stats that were here first (128K
+followers, 642 posts) would have misrepresented it on a live page. Each tile
+shows a "Watch on Instagram" cue instead.
+
+### Grid layout note
+
+Tile height comes from `grid-auto-rows`, not `aspect-ratio`, and the images are
+absolutely positioned. Sizing a tile by `aspect-ratio` while its image is sized
+by `height:100%` is circular, and the tiles collapse to a fraction of their
+cell. Keep it this way when editing.
 
 ## Content to edit before going live
 
