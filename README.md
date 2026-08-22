@@ -143,6 +143,41 @@ absolutely positioned. Sizing a tile by `aspect-ratio` while its image is sized
 by `height:100%` is circular, and the tiles collapse to a fraction of their
 cell. Keep it this way when editing.
 
+## Motion layer
+
+`assets/css/motion.css` + `assets/js/motion.js` add the animation pass. Both are
+**additive**: `motion.js` adds a `js-motion` class to `<html>`, and every effect
+is scoped under it. With JS off, or when the visitor's OS asks for reduced
+motion, the site renders exactly as the base stylesheet describes — nothing is
+hidden waiting for a script that never runs.
+
+| Effect | How it works |
+|---|---|
+| Scroll progress bar | CSS `animation-timeline: scroll()` where supported, rAF fallback otherwise |
+| Hero parallax | CSS `animation-timeline: view()`, rAF fallback |
+| Headline reveals | Words wrapped in overflow-hidden boxes, rising with a 65 ms stagger |
+| Magnetic buttons | Cursor offset fed into a spring, applied as `--tx`/`--ty` |
+| Card + tile tilt | Pointer position → spring → `rotateX`/`rotateY` and a lift |
+| Pointer spotlight | `--mx`/`--my` drive a radial gradient inside plan cards |
+| Nav indicator | One underline that springs between links, follows the active section |
+| Marquee band | Duplicated track translated -50%, paused on hover |
+
+The spring is ~20 lines: `v = (v + (target - x) * k) * damping`. One
+`requestAnimationFrame` loop drives every instance and stops itself once all
+springs settle, so idle pages cost nothing.
+
+Pointer effects (magnetic, tilt, nav indicator) are gated behind
+`(pointer: fine)` — touch screens get the flat, fast version. Tilt is also
+disabled under 860 px in CSS.
+
+### Editing notes
+
+- Add `data-split` to any heading to give it the staggered word reveal.
+- Tilt strength: the two `addTilt(el, maxDeg, lift)` calls at the bottom of
+  `motion.js`.
+- To drop the whole layer, remove the two `<link>`/`<script>` tags — the site
+  still works.
+
 ## Content to edit before going live
 
 Placeholders in `index.html`:

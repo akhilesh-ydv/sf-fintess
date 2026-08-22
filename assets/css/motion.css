@@ -1,0 +1,286 @@
+/* =========================================================
+   Motion layer — Amit Kumar
+   Concepts borrowed from modern motion design:
+     scroll-linked progress, staggered mask reveals, spring
+     gestures (magnetic / tilt / press), pointer spotlights.
+
+   Everything here is additive. Without JS the site renders
+   exactly as before: the .js-motion class is only added by
+   motion.js, and only when the visitor allows motion.
+   ========================================================= */
+
+:root{
+  --ease-out:  cubic-bezier(.16,1,.3,1);
+  --ease-soft: cubic-bezier(.33,1,.68,1);
+}
+
+/* ---------------------------------------------------------
+   1. Scroll progress — scroll-linked where the browser
+      supports scroll timelines, JS-driven everywhere else
+   --------------------------------------------------------- */
+.scroll-progress{
+  position:fixed;
+  top:0; left:0;
+  z-index:80;
+  width:100%;
+  height:2px;
+  transform:scaleX(var(--p,0));
+  transform-origin:0 50%;
+  background:linear-gradient(90deg,var(--accent),#ff7a3d 70%,#ffb37a);
+  pointer-events:none;
+}
+@supports (animation-timeline: scroll()){
+  .scroll-progress{
+    --p:1;
+    animation:scrollProgress linear both;
+    animation-timeline:scroll(root block);
+  }
+  @keyframes scrollProgress{ from{ transform:scaleX(0); } to{ transform:scaleX(1); } }
+}
+
+/* ---------------------------------------------------------
+   2. Staggered word reveal
+      Each word sits in its own overflow-hidden box and rises
+      into place; motion.js sets the per-word delay.
+   --------------------------------------------------------- */
+.js-motion [data-split] .word{
+  display:inline-block;
+  overflow:hidden;
+  vertical-align:top;
+  /* keeps descenders from being clipped by the mask */
+  padding-bottom:.12em;
+  margin-bottom:-.12em;
+}
+.js-motion [data-split] .word > span{
+  display:inline-block;
+  transform:translateY(110%);
+  opacity:0;
+  transition:transform .95s var(--ease-out), opacity .5s linear;
+}
+.js-motion [data-split].is-in .word > span{
+  transform:none;
+  opacity:1;
+}
+
+/* ---------------------------------------------------------
+   3. Hero — parallax drift plus a scroll cue
+   --------------------------------------------------------- */
+@supports (animation-timeline: view()){
+  .js-motion .hero-media{
+    animation:heroPan linear both;
+    animation-timeline:view();
+    animation-range:entry 0% exit 100%;
+  }
+  @keyframes heroPan{
+    from{ transform:scale(1.12) translate3d(0,-2%,0); }
+    to  { transform:scale(1.12) translate3d(0,6%,0); }
+  }
+}
+
+.scroll-cue{
+  position:absolute;
+  left:50%; bottom:26px;
+  z-index:2;
+  display:grid;
+  justify-items:center;
+  gap:9px;
+  transform:translateX(-50%);
+  font-size:9.5px;
+  font-weight:600;
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  pointer-events:none;
+}
+.scroll-cue i{
+  display:block;
+  width:1px; height:42px;
+  background:linear-gradient(to bottom,var(--accent),transparent);
+  transform-origin:50% 0;
+  animation:cueDrop 2.1s var(--ease-soft) infinite;
+}
+@keyframes cueDrop{
+  0%   { transform:scaleY(0);   opacity:0; }
+  35%  { transform:scaleY(1);   opacity:1; }
+  70%  { transform:scaleY(1);   opacity:1; }
+  100% { transform:scaleY(0) translateY(42px); opacity:0; }
+}
+
+/* ---------------------------------------------------------
+   4. Gestures — magnetic pull, press feedback, sheen
+      motion.js springs --tx / --ty; CSS owns the rest.
+   --------------------------------------------------------- */
+.js-motion .btn{
+  position:relative;
+  overflow:hidden;
+  transform:translate3d(var(--tx,0px),var(--ty,0px),0) scale(var(--sc,1));
+  transition:background .35s var(--ease-soft), color .35s var(--ease-soft),
+             box-shadow .35s var(--ease-soft), border-color .35s var(--ease-soft),
+             transform .12s linear;
+}
+.js-motion .btn:hover{ --sc:1.035; }
+.js-motion .btn:active{ --sc:.97; transition-duration:.06s; }
+
+/* light sweep across the button on hover */
+.js-motion .btn::after{
+  content:"";
+  position:absolute;
+  top:0; left:-60%;
+  width:45%; height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent);
+  transform:skewX(-18deg);
+  opacity:0;
+  pointer-events:none;
+}
+.js-motion .btn:hover::after{ animation:sheen .85s var(--ease-soft); }
+@keyframes sheen{
+  0%  { left:-60%; opacity:0; }
+  15% { opacity:1; }
+  100%{ left:120%; opacity:0; }
+}
+
+/* ---------------------------------------------------------
+   5. Pointer spotlight + spring tilt on cards and tiles
+   --------------------------------------------------------- */
+.js-motion .plan-card{
+  position:relative;
+  isolation:isolate;
+  transform:perspective(1000px)
+            rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))
+            translate3d(0,var(--lift,0px),0);
+  transform-style:preserve-3d;
+}
+.js-motion .plan-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),
+             rgba(255,31,75,.16), transparent 62%);
+  opacity:0;
+  transition:opacity .45s var(--ease-soft);
+  pointer-events:none;
+}
+.js-motion .plan-card:hover::before{ opacity:1; }
+
+/* the price lifts slightly out of the card while tilting */
+.js-motion .plan-card .price,
+.js-motion .plan-card h3{ transform:translateZ(26px); }
+
+.js-motion .ig-tile{
+  transform:perspective(900px)
+            rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))
+            translate3d(0,var(--lift,0px),0);
+}
+
+/* ---------------------------------------------------------
+   6. Sliding nav indicator (desktop pointer only)
+   --------------------------------------------------------- */
+/* the indicator is positioned against the nav, so the nav must be
+   a containing block — without this it anchors to the fixed header */
+@media (min-width:861px){
+  .js-motion .nav{ position:relative; }
+}
+.nav-ind{
+  position:absolute;
+  left:0; bottom:-2px;
+  height:1px;
+  width:var(--w,0px);
+  transform:translateX(var(--x,0px));
+  background:var(--accent);
+  opacity:0;
+  pointer-events:none;
+}
+.js-motion .nav-ind.is-on{ opacity:1; }
+/* the per-link underline steps aside for the shared indicator */
+.js-motion .nav-link::after{ display:none; }
+
+/* ---------------------------------------------------------
+   7. Marquee band
+   --------------------------------------------------------- */
+.marquee{
+  position:relative;
+  overflow:hidden;
+  padding:20px 0;
+  border-block:1px solid var(--line);
+  background:var(--bg-2);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+}
+.marquee-track{
+  display:flex;
+  width:max-content;
+  gap:0;
+  animation:marquee 26s linear infinite;
+}
+.marquee:hover .marquee-track{ animation-play-state:paused; }
+.marquee-track span{
+  display:inline-flex;
+  align-items:center;
+  gap:34px;
+  padding-right:34px;
+  font-family:var(--font-display);
+  font-size:clamp(18px,2.4vw,30px);
+  font-weight:800;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(255,255,255,.28);
+  white-space:nowrap;
+}
+.marquee-track span b{
+  color:var(--accent);
+  -webkit-text-stroke:0;
+  font-weight:800;
+}
+.marquee-track span i{
+  width:7px; height:7px;
+  border-radius:50%;
+  background:var(--accent);
+  opacity:.55;
+}
+@keyframes marquee{ to{ transform:translateX(-50%); } }
+
+/* ---------------------------------------------------------
+   8. Section entrance polish
+   --------------------------------------------------------- */
+.js-motion .plan-card,
+.js-motion .quote,
+.js-motion .feature-list li{ will-change:auto; }
+
+.js-motion .eyebrow{ position:relative; overflow:hidden; }
+.js-motion .eyebrow::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:var(--bg);
+  transform:translateX(0);
+  transition:transform .8s var(--ease-out) .1s;
+}
+.js-motion .eyebrow.is-in::after{ transform:translateX(101%); }
+
+/* ---------------------------------------------------------
+   9. Anyone who asks for less motion gets none of it
+   --------------------------------------------------------- */
+@media (prefers-reduced-motion:reduce){
+  .scroll-progress{ display:none; }
+  .scroll-cue i{ animation:none; }
+  .marquee-track{ animation:none; }
+  .js-motion [data-split] .word > span{ transform:none; opacity:1; transition:none; }
+  .js-motion .eyebrow::after{ display:none; }
+  .js-motion .btn::after{ display:none; }
+  .js-motion .plan-card,
+  .js-motion .ig-tile{ transform:none; }
+}
+
+@media (max-width:860px){
+  .nav-ind{ display:none; }
+  .js-motion .nav-link::after{ display:block; }
+  .scroll-cue{ display:none; }
+  .marquee{ padding:15px 0; }
+  /* tilt is a pointer affordance - phones get the flat version */
+  .js-motion .plan-card,
+  .js-motion .ig-tile{ transform:none; }
+  .js-motion .plan-card .price,
+  .js-motion .plan-card h3{ transform:none; }
+}
