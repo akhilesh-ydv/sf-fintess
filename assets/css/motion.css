@@ -284,3 +284,89 @@
   .js-motion .plan-card .price,
   .js-motion .plan-card h3{ transform:none; }
 }
+
+/* =========================================================
+   10. Photo reveals — the image wipes up inside its frame
+        while the frame itself fades in. Clip-path only, so
+        it never fights the parallax transform below.
+   ========================================================= */
+.js-motion .figure-frame img,
+.js-motion .plan-media img,
+.js-motion .hero-card-media video,
+.js-motion .feature-frame video{
+  clip-path:inset(0 0 100% 0);
+  transition:clip-path 1.1s var(--ease-out);
+}
+.js-motion .about-figure.is-in .figure-frame img,
+.js-motion .plan-media.is-in img,
+.js-motion .hero-card.is-in .hero-card-media video,
+.js-motion .feature-frame.is-in video{
+  clip-path:inset(0 0 0 0);
+}
+
+/* gallery tiles wipe in one after another */
+.js-motion .rail-item img{
+  clip-path:inset(0 0 100% 0);
+  transition:clip-path .9s var(--ease-out);
+}
+.js-motion .rail-item.is-in img{ clip-path:inset(0 0 0 0); }
+
+/* =========================================================
+   11. In-frame parallax — the photo drifts inside its own
+        frame as the section passes, so nothing looks static
+   ========================================================= */
+/* Only .plan-media gets the drift: it clips its overflow. The about frame
+   deliberately lets its crimson border sit outside the box, so adding
+   overflow:hidden there to contain a scaled photo would cut the border off. */
+@supports (animation-timeline: view()){
+  @media (min-width:861px){
+    .js-motion .plan-media img{
+      animation:mediaDrift linear both;
+      animation-timeline:view();
+      animation-range:entry 0% exit 100%;
+    }
+    @keyframes mediaDrift{
+      from{ transform:scale(1.14) translate3d(0,-3.5%,0); }
+      to  { transform:scale(1.14) translate3d(0,3.5%,0); }
+    }
+  }
+}
+
+/* =========================================================
+   12. Programme cards deal their contents in sequence
+   ========================================================= */
+.js-motion .plan-card > *{
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .7s var(--ease-out), transform .7s var(--ease-out);
+}
+.js-motion .plan-card.is-in > *{ opacity:1; transform:none; }
+.js-motion .plan-card.is-in > *:nth-child(1){ transition-delay:.05s; }
+.js-motion .plan-card.is-in > *:nth-child(2){ transition-delay:.12s; }
+.js-motion .plan-card.is-in > *:nth-child(3){ transition-delay:.19s; }
+.js-motion .plan-card.is-in > *:nth-child(4){ transition-delay:.26s; }
+.js-motion .plan-card.is-in > *:nth-child(5){ transition-delay:.33s; }
+.js-motion .plan-card.is-in > *:nth-child(6){ transition-delay:.40s; }
+
+/* =========================================================
+   13. The marquee leans with the scroll
+   ========================================================= */
+.marquee{
+  transform:skewX(var(--mq-skew,0deg));
+  transition:none;
+}
+
+/* =========================================================
+   14. Review cards rise in sequence
+   ========================================================= */
+.js-motion .review.reveal{ transition-delay:calc(var(--i,0) * 90ms); }
+
+@media (prefers-reduced-motion:reduce){
+  .js-motion .figure-frame img,
+  .js-motion .plan-media img,
+  .js-motion .rail-item img,
+  .js-motion .hero-card-media video,
+  .js-motion .feature-frame video{ clip-path:none; transition:none; }
+  .js-motion .plan-card > *{ opacity:1; transform:none; transition:none; }
+  .marquee{ transform:none; }
+}

@@ -183,6 +183,10 @@ hidden waiting for a script that never runs.
 | Pointer spotlight | `--mx`/`--my` drive a radial gradient inside plan cards |
 | Nav indicator | One underline that springs between links, follows the active section |
 | Marquee band | Duplicated track translated -50%, paused on hover |
+| Photo wipes | clip-path inset animates open when the frame enters view |
+| In-frame parallax | Plan photos drift inside their panel on a view timeline |
+| Card stagger | Plan card children deal in at 70 ms intervals |
+| Marquee lean | Scroll velocity springs a skew on the band, settles level |
 
 The spring is ~20 lines: `v = (v + (target - x) * k) * damping`. One
 `requestAnimationFrame` loop drives every instance and stops itself once all

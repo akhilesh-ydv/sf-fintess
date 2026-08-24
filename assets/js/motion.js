@@ -144,6 +144,60 @@
   }
 
   /* =========================================================
+     Gallery tiles wipe in one after another as the rail enters
+     ========================================================= */
+  var railItems = Array.prototype.slice.call(document.querySelectorAll('.rail-item'));
+
+  if (railItems.length && 'IntersectionObserver' in window) {
+    var rio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        el.style.transitionDelay = (railItems.indexOf(el) % 4) * 90 + 'ms';
+        el.classList.add('is-in');
+        rio.unobserve(el);
+      });
+    }, { threshold: 0.15 });
+    railItems.forEach(function (el) { rio.observe(el); });
+  } else {
+    railItems.forEach(function (el) { el.classList.add('is-in'); });
+  }
+
+  /* review cards inherit their stagger position from --i */
+  Array.prototype.forEach.call(document.querySelectorAll('.review'), function (el, i) {
+    el.style.setProperty('--i', i);
+  });
+
+  /* =========================================================
+     The marquee leans into the direction you are scrolling and
+     springs back to level when you stop
+     ========================================================= */
+  var marquee = document.querySelector('.marquee');
+
+  if (marquee) {
+    var skew = new Spring(function (v) {
+      marquee.style.setProperty('--mq-skew', v.toFixed(2) + 'deg');
+    }, 0.14, 0.76);
+
+    var lastY = window.scrollY;
+    var settle;
+
+    window.addEventListener('scroll', function () {
+      var y = window.scrollY;
+      var velocity = y - lastY;
+      lastY = y;
+
+      var target = velocity * 0.22;
+      if (target > 5) target = 5;
+      if (target < -5) target = -5;
+      skew.to(target);
+
+      clearTimeout(settle);
+      settle = setTimeout(function () { skew.to(0); }, 110);
+    }, { passive: true });
+  }
+
+  /* =========================================================
      Videos play only while they are on screen. Phones stay cool
      and nothing downloads until it is actually about to be seen.
      ========================================================= */
