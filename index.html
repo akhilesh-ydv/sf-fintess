@@ -200,16 +200,28 @@
       <p class="eyebrow reveal">Inside the sessions</p>
       <h2 class="section-title reveal" data-split>Real training floor</h2>
     </div>
-    <p class="gallery-hint reveal">Drag to explore &rarr;</p>
+    <p class="gallery-hint reveal">Drag, swipe or use the arrows</p>
   </div>
 
-  <div class="rail" id="rail">
-    <figure class="rail-item"><img src="assets/img/shot-1.jpg?v=3" alt="Back training" width="800" height="1200" loading="lazy" decoding="async" /><figcaption>Back day</figcaption></figure>
-    <figure class="rail-item"><img src="assets/img/shot-4.jpg?v=3" alt="Overhead cable work" width="800" height="1200" loading="lazy" decoding="async" /><figcaption>Lat work</figcaption></figure>
-    <figure class="rail-item"><img src="assets/img/shot-3.jpg?v=3" alt="Between sets" width="800" height="1200" loading="lazy" decoding="async" /><figcaption>Between sets</figcaption></figure>
-    <figure class="rail-item"><img src="assets/img/shot-6.jpg?v=3" alt="Cable row" width="800" height="1200" loading="lazy" decoding="async" /><figcaption>Rows</figcaption></figure>
-    <figure class="rail-item"><img src="assets/img/shot-2.jpg?v=3" alt="Conditioning" width="800" height="1200" loading="lazy" decoding="async" /><figcaption>Conditioning</figcaption></figure>
-    <figure class="rail-item"><img src="assets/img/shot-5.jpg?v=3" alt="Machine work" width="800" height="1200" loading="lazy" decoding="async" /><figcaption>Machine work</figcaption></figure>
+  <div class="slider" data-slider>
+    <div class="rail" id="rail" data-slider-track>
+      <figure class="rail-item"><img src="assets/img/shot-1.jpg?v=3" alt="Back training" width="800" height="1200" loading="lazy" decoding="async" /><figcaption>Back day</figcaption></figure>
+      <figure class="rail-item"><img src="assets/img/shot-4.jpg?v=3" alt="Overhead cable work" width="800" height="1200" loading="lazy" decoding="async" /><figcaption>Lat work</figcaption></figure>
+      <figure class="rail-item"><img src="assets/img/shot-3.jpg?v=3" alt="Between sets" width="800" height="1200" loading="lazy" decoding="async" /><figcaption>Between sets</figcaption></figure>
+      <figure class="rail-item"><img src="assets/img/shot-6.jpg?v=3" alt="Cable row" width="800" height="1200" loading="lazy" decoding="async" /><figcaption>Rows</figcaption></figure>
+      <figure class="rail-item"><img src="assets/img/shot-2.jpg?v=3" alt="Conditioning" width="800" height="1200" loading="lazy" decoding="async" /><figcaption>Conditioning</figcaption></figure>
+      <figure class="rail-item"><img src="assets/img/shot-5.jpg?v=3" alt="Machine work" width="800" height="1200" loading="lazy" decoding="async" /><figcaption>Machine work</figcaption></figure>
+    </div>
+
+    <div class="shell slider-ui">
+      <button class="slider-btn" type="button" data-slider-prev aria-label="Previous photos">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.4 4.6L13.9 3.2L5.1 12l8.8 8.8l1.5-1.4L8.1 12z"/></svg>
+      </button>
+      <div class="slider-dots" data-slider-dots></div>
+      <button class="slider-btn" type="button" data-slider-next aria-label="More photos">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.6 4.6l1.5-1.4L18.9 12l-8.8 8.8l-1.5-1.4l7.4-7.4z"/></svg>
+      </button>
+    </div>
   </div>
 </section>
 
@@ -270,7 +282,8 @@
       </div>
     </header>
 
-    <div class="review-grid">
+    <div class="slider reviews-slider" data-slider>
+      <div class="review-grid" data-slider-track>
       <article class="review reveal">
         <div class="review-top">
           <span class="review-avatar">R</span>
@@ -318,6 +331,13 @@
         </span>
         <p>The diet plan was the part that changed everything for me. Same food I grew up eating, just structured properly. Down 9 kg without hating my meals.</p>
       </article>
+      </div>
+
+      <div class="slider-ui">
+        <button class="slider-btn" type="button" data-slider-prev aria-label="Previous reviews"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.4 4.6L13.9 3.2L5.1 12l8.8 8.8l1.5-1.4L8.1 12z"/></svg></button>
+        <div class="slider-dots" data-slider-dots></div>
+        <button class="slider-btn" type="button" data-slider-next aria-label="More reviews"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.6 4.6l1.5-1.4L18.9 12l-8.8 8.8l-1.5-1.4l7.4-7.4z"/></svg></button>
+      </div>
     </div>
 
     <p class="review-foot reveal">
@@ -419,6 +439,7 @@
 </footer>
 
 <script src="assets/js/main.js?v=3"></script>
+<script src="assets/js/slider.js?v=3"></script>
 <script src="assets/js/motion.js?v=3"></script>
 </body>
 </html>

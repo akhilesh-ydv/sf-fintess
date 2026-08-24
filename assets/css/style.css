@@ -1247,3 +1247,86 @@ h1,h2,h3,h4{ margin:0; font-family:var(--font-display); }
   .review-grid{ grid-template-columns:1fr; }
   .review-grid .review:last-child{ grid-column:auto; }
 }
+
+/* =========================================================
+   SLIDER CONTROLS
+   The track is a native scroll-snap strip, so it swipes and
+   drags on its own. Arrows and dots are the enhancement, and
+   they hide themselves when the track has nothing to scroll.
+   ========================================================= */
+.slider{ position:relative; }
+.slider.is-static .slider-ui{ display:none; }
+
+.slider-ui{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-top:20px;
+}
+
+.slider-btn{
+  flex:0 0 auto;
+  display:grid;
+  place-items:center;
+  width:46px; height:46px;
+  border-radius:50%;
+  border:1px solid var(--line-strong);
+  background:rgba(255,255,255,.04);
+  color:var(--text);
+  cursor:pointer;
+  padding:0;
+  transition:background .3s var(--ease), border-color .3s var(--ease),
+             color .3s var(--ease), transform .3s var(--ease), opacity .3s var(--ease);
+}
+.slider-btn svg{ width:18px; height:18px; fill:currentColor; }
+.slider-btn:hover:not(:disabled){
+  background:var(--accent);
+  border-color:var(--accent);
+  color:#fff;
+  transform:translateY(-2px);
+}
+.slider-btn:disabled{ opacity:.28; cursor:default; }
+
+.slider-dots{
+  flex:1 1 auto;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+}
+.slider-dot{
+  width:7px; height:7px;
+  padding:0;
+  border:0;
+  border-radius:999px;
+  background:var(--line-strong);
+  cursor:pointer;
+  transition:background .3s var(--ease), width .3s var(--ease);
+}
+.slider-dot:hover{ background:var(--text-dim); }
+.slider-dot.is-on{ width:24px; background:var(--accent); }
+
+/* keyboard users need to see where they are */
+.rail:focus-visible,
+.review-grid:focus-visible{ outline:2px solid var(--accent); outline-offset:6px; }
+.rail:focus:not(:focus-visible),
+.review-grid:focus:not(:focus-visible){ outline:none; }
+
+/* reviews turn into a swipeable strip on small screens */
+@media (max-width:760px){
+  .review-grid{
+    display:flex;
+    gap:14px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:none;
+    padding-bottom:4px;
+  }
+  .review-grid::-webkit-scrollbar{ display:none; }
+  .review{
+    flex:0 0 84%;
+    scroll-snap-align:center;
+  }
+  .review-grid .review:last-child{ grid-column:auto; }
+  .slider-btn{ width:42px; height:42px; }
+}

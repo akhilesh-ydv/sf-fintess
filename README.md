@@ -10,6 +10,7 @@ assets/css/style.css       theme + layout
 assets/css/motion.css      animation layer (springs, reveals, marquee)
 assets/js/main.js          sticky header, mobile menu, scroll reveal, active nav
 assets/js/motion.js        motion behaviour, opt-out on reduced motion
+assets/js/slider.js        arrows + dots over native scroll-snap
 assets/img/*.jpg           the trainer's photos + video posters
 assets/video/*.mp4         the trainer's clips
 assets/img/_originals/     untouched WhatsApp files, excluded from the deploy
@@ -178,6 +179,50 @@ disabled under 860 px in CSS.
   `motion.js`.
 - To drop the whole layer, remove the two `<link>`/`<script>` tags — the site
   still works.
+
+## Slider
+
+`assets/js/slider.js` drives both the gallery rail and the reviews strip. It is
+an enhancement layer, not a carousel library: the track is a native CSS
+scroll-snap strip, so it already swipes on a phone and drags with a mouse
+without any JavaScript. The script only adds arrows, dots and keyboard support.
+
+Mark up a new one like this:
+
+```html
+<div class="slider" data-slider>
+  <div class="my-track" data-slider-track> …items… </div>
+  <div class="slider-ui">
+    <button data-slider-prev class="slider-btn">…</button>
+    <div data-slider-dots class="slider-dots"></div>
+    <button data-slider-next class="slider-btn">…</button>
+  </div>
+</div>
+```
+
+Behaviour worth knowing:
+
+- If the track has nothing to scroll, the slider adds `is-static` to itself and
+  the controls hide. That is why the reviews controls appear on phones (the
+  cards become a swipe strip) and disappear on desktop (they are a 3-up grid).
+- Dots rebuild on resize and after `load`, since images finishing late change
+  the scroll width.
+- Arrow keys move the track once it has focus.
+- `prefers-reduced-motion` switches the glide to an instant jump.
+
+## 360° spin — what it would take
+
+Not built, because the material for it does not exist yet. A 360 viewer needs a
+**turntable sequence**: 24–36 frames taken at even angles around the subject,
+camera height and distance fixed. The nine supplied photos are different
+exercises from different days, and the clips are static shots — sampling
+`clip-1` at 2s, 14s, 28s and 40s gives four near-identical frames, so there is
+no rotation to scrub through.
+
+To shoot one: the trainer stands still, someone walks a full slow circle around
+him filming for 20–30 seconds, phone held at chest height, even pace, plain
+background. Send that clip and the frames can be extracted and wired to a
+drag-to-rotate viewer — the same technique product sites use.
 
 ## Google reviews
 
