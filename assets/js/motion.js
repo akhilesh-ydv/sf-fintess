@@ -126,7 +126,7 @@
   /* =========================================================
      Hero parallax — fallback for browsers without view timelines
      ========================================================= */
-  var heroMedia = document.querySelector('.hero-media');
+  var heroMedia = document.querySelector('.hero-bg');
   var cssViewTimeline = window.CSS && CSS.supports && CSS.supports('animation-timeline: view()');
 
   if (heroMedia && !cssViewTimeline) {
@@ -141,6 +141,99 @@
       if (!heroQueued) { heroQueued = true; requestAnimationFrame(moveHero); }
     }, { passive: true });
     moveHero();
+  }
+
+  /* =========================================================
+     Videos play only while they are on screen. Phones stay cool
+     and nothing downloads until it is actually about to be seen.
+     ========================================================= */
+  var clips = Array.prototype.slice.call(
+    document.querySelectorAll('.hero-card-media video, .ig-tile.is-clip video')
+  );
+
+  if (clips.length && 'IntersectionObserver' in window) {
+    var vio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var v = entry.target;
+        if (entry.isIntersecting) {
+          if (v.preload !== 'auto') v.preload = 'auto';
+          var p = v.play();
+          if (p && p.catch) p.catch(function () { /* autoplay refused, poster stays */ });
+        } else if (!v.paused) {
+          v.pause();
+        }
+      });
+    }, { threshold: 0.25 });
+    clips.forEach(function (v) { vio.observe(v); });
+  }
+
+  /* =========================================================
+     Feature clip — heavy file, so it loads only on request
+     ========================================================= */
+  var feat = document.getElementById('featureVideo');
+  if (feat) {
+    var fv = feat.querySelector('video');
+    var fb = feat.querySelector('.feature-play');
+
+    if (fv && fb) {
+      fb.addEventListener('click', function () {
+        fv.preload = 'auto';
+        var p = fv.play();
+        if (p && p.catch) p.catch(function () {});
+        feat.classList.add('is-playing');
+      });
+      fv.addEventListener('click', function () {
+        if (fv.paused) {
+          fv.play();
+          feat.classList.add('is-playing');
+        } else {
+          fv.pause();
+          feat.classList.remove('is-playing');
+        }
+      });
+      // stop it when it scrolls away
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting && !fv.paused) {
+              fv.pause();
+              feat.classList.remove('is-playing');
+            }
+          });
+        }, { threshold: 0.1 }).observe(feat);
+      }
+    }
+  }
+
+  /* =========================================================
+     Gallery rail — drag to scroll with a mouse, native swipe on touch
+     ========================================================= */
+  var rail = document.getElementById('rail');
+  if (rail) {
+    var dragging = false, startX = 0, startLeft = 0;
+
+    rail.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'touch') return;   // let the browser do its own thing
+      dragging = true;
+      startX = e.clientX;
+      startLeft = rail.scrollLeft;
+      rail.classList.add('is-dragging');
+      try { rail.setPointerCapture(e.pointerId); } catch (err) {}
+    });
+
+    rail.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      rail.scrollLeft = startLeft - (e.clientX - startX);
+    });
+
+    var stopDrag = function () {
+      if (!dragging) return;
+      dragging = false;
+      rail.classList.remove('is-dragging');
+    };
+    rail.addEventListener('pointerup', stopDrag);
+    rail.addEventListener('pointercancel', stopDrag);
+    rail.addEventListener('pointerleave', stopDrag);
   }
 
   /* Pointer affordances below this line are desktop only */

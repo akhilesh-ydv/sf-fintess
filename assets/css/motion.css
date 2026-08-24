@@ -66,14 +66,14 @@
    3. Hero — parallax drift plus a scroll cue
    --------------------------------------------------------- */
 @supports (animation-timeline: view()){
-  .js-motion .hero-media{
+  .js-motion .hero-bg{
     animation:heroPan linear both;
     animation-timeline:view();
     animation-range:entry 0% exit 100%;
   }
   @keyframes heroPan{
-    from{ transform:scale(1.12) translate3d(0,-2%,0); }
-    to  { transform:scale(1.12) translate3d(0,6%,0); }
+    from{ transform:scale(1.12) translate3d(0,-3%,0); }
+    to  { transform:scale(1.12) translate3d(0,5%,0); }
   }
 }
 

@@ -48,7 +48,6 @@ The trainer is male and Indian in every shot, matching the Amit Kumar brand.
 
 | File | Size | Subject | Pexels photo |
 |---|---|---|---|
-| `hero.jpg` | 1920×1080 | machine work, teal-lit gym | 13756380 |
 | `about.jpg` | 900×1150 | trainer portrait, b&w | 17559312 |
 | `plan-1.jpg` | 1280×860 | group class in a studio | 3775589 |
 | `plan-2.jpg` | 1280×860 | trainer with a trainee, Indian gym | 16640766 |
