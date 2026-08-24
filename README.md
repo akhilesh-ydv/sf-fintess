@@ -4,15 +4,16 @@ Plain HTML / CSS / JS. No build step, no dependencies. Layout, sections, copy an
 type are matched to the reference design.
 
 ```
-index.html                 single-page site (all sections)
-                           hero, about, 3 plans, testimonials,
-                           Instagram grid, CTA, footer
+index.html                 single page: hero, about, programs, gallery,
+                           feature clip, Google reviews, reels, CTA, footer
 assets/css/style.css       theme + layout
+assets/css/motion.css      animation layer (springs, reveals, marquee)
 assets/js/main.js          sticky header, mobile menu, scroll reveal, active nav
-assets/img/*.jpg           site photos (Pexels) + Instagram reel thumbnails
-assets/img/avatar-*.svg    testimonial avatars (generated)
-assets/img/_placeholders/  the original generated SVG art, unused - safe to delete
-.htaccess                  clean URLs (Apache)
+assets/js/motion.js        motion behaviour, opt-out on reduced motion
+assets/img/*.jpg           the trainer's photos + video posters
+assets/video/*.mp4         the trainer's clips
+assets/img/_originals/     untouched WhatsApp files, excluded from the deploy
+.htaccess                  clean URLs (Apache only, ignored on Vercel)
 ```
 
 ## Run it
@@ -38,42 +39,43 @@ Then open `http://localhost:8000/` — the URL shows no `.html` because
      Hostinger). Netlify, Vercel and GitHub Pages do this automatically, so
      `.htaccess` can be deleted there.
 
-## Images
+## Photos and video
 
-Real photos from **Pexels** — free for commercial use, no attribution required
-(crediting the photographer is still a nice thing to do). Downloaded at full
-resolution, so they are sharp on retina screens.
+Everything is the trainer's own material — nine phone photos and four clips.
+The untouched files sit in `assets/img/_originals/` and are excluded from the
+deploy by `.vercelignore`; the site uses cropped derivatives generated from them.
 
-The trainer is male and Indian in every shot, matching the Amit Kumar brand.
+| File | Size | From |
+|---|---|---|
+| `trainer.jpg` | 1000×1500 | portrait, gym with the flag |
+| `about.jpg` | 900×1200 | same shoot, tighter crop |
+| `plan-1/2/3.jpg` | 900×1200 | cable and back work at the red wall |
+| `shot-1…6.jpg` | 800×1200 | gallery rail |
+| `cta.jpg` | 1920×900 | frame from the deadlift clip |
+| `poster-feature.jpg` | 1280×720 | poster for `feature.mp4` |
+| `poster-clip-1/2.jpg` | 720×1100 | posters for the portrait clips |
 
-| File | Size | Subject | Pexels photo |
-|---|---|---|---|
-| `about.jpg` | 900×1150 | trainer portrait, b&w | 17559312 |
-| `plan-1.jpg` | 1280×860 | group class in a studio | 3775589 |
-| `plan-2.jpg` | 1280×860 | trainer with a trainee, Indian gym | 16640766 |
-| `plan-3.jpg` | 1280×860 | trainer and trainee, dumbbells | 12931805 |
-| `cta.jpg` | 1920×900 | dumbbell curl, b&w | 1229356 |
-| `reel-1..3.jpg` | 639×639 | real reel thumbnails from Instagram | — |
-| `ig-avatar.jpg` | 100×100 | real Instagram profile picture | — |
-| `hero-mobile.jpg` | 900×1400 | portrait hero crop for phones | 13756380 |
-| `avatar-1/2.svg` | 200×200 | testimonial faces (generated) | — |
+| Clip | Size | Used for |
+|---|---|---|
+| `clip-2.mp4` | 0.6 MB, 720×1280 | hero card, loops muted |
+| `clip-1.mp4` | 0.4 MB, 720×1280 | first reels tile |
+| `feature.mp4` | 6 MB, 1280×720 | feature band, `preload="none"` — downloads only on play |
 
-Any photo can be re-fetched or re-cropped from Pexels' CDN by changing the URL
-params, e.g. face-aware crop:
+Because the source photos are vertical, the layout is built around portrait
+frames rather than cropping them into letterboxes.
 
-```
-https://images.pexels.com/photos/<id>/pexels-photo-<id>.jpeg?auto=compress&cs=tinysrgb&fit=crop&crop=faces&w=1280&h=860
-```
+### Replacing a photo
 
-Swap in the trainer's own photos with the same filenames and nothing else needs
-to change. If the extension differs, update:
+Drop a new file over the same name and bump the `?v=` number on its `<img>` tag
+(images are cached for a year, so the query string is what forces a refresh).
+Crops were produced with a script that reads EXIF orientation first — worth
+keeping in mind if you regenerate them, since ignoring orientation flips some
+phone photos on their side.
 
-- `index.html` — the `<img src="...">` tags (about / plans / avatars)
-- `assets/css/style.css` — `.hero-media` and `.cta-media` background images
+### Videos
 
-The CSS dims and de-saturates the plan photos (`filter: grayscale(.35)
-brightness(.85)`, full colour on hover) so they sit back behind the text. Lower
-those values in `.plan-media img` if you want the photos brighter.
+Clips pause when they scroll off screen and resume when they come back, so a
+phone is not decoding video it cannot see. Anything heavy is `preload="none"`.
 
 ## Typography
 
@@ -177,6 +179,64 @@ disabled under 860 px in CSS.
 - To drop the whole layer, remove the two `<link>`/`<script>` tags — the site
   still works.
 
+## Google reviews
+
+The `#reviews` section has a rating summary, three review cards, and two links
+out to Google. **The three cards are samples and the rating is a placeholder** —
+both must be replaced with real data before this is shown to clients. Fake
+reviews violate Google's policies and can get a Business Profile suspended.
+
+### 1. You need a Google Business Profile first
+
+Reviews live on Google, not on this site — the buttons only send people there.
+No profile means there is nowhere to leave a review.
+
+1. Go to **google.com/business** and sign in with the business Gmail.
+2. Add the business: name, category (`Personal trainer` or `Gym`), phone, and
+   this website's URL. A trainer without a shopfront should choose
+   **service-area business** rather than a public address.
+3. Verify — usually a short video call or video upload, sometimes a postcard.
+   Nothing is publicly visible until verification passes.
+
+### 2. Get the review link
+
+Once verified, either:
+
+- **Business Profile → Ask for reviews** — gives a short link shaped like
+  `https://g.page/r/XXXXXXXXXXXX/review`, or
+- Look up the **Place ID** at
+  `developers.google.com/maps/documentation/places/web-service/place-id`,
+  then use `https://search.google.com/local/writereview?placeid=YOUR_PLACE_ID`
+
+### 3. Put the link in the page
+
+Search `index.html` for **GOOGLE_LINK** — three spots:
+
+| Marker | What it is |
+|---|---|
+| GOOGLE_LINK 1 | "Write a review" button (appears twice — button and footer line) |
+| GOOGLE_LINK 2 | "Read all reviews" → paste the Google Maps listing URL |
+
+Then update `5.0` and the star count in `.rating-card` to the real numbers.
+
+### 4. What the client sees when they click
+
+They land on Google's review box, signed into their own Google account (Google
+requires one — nobody can review anonymously), pick a star rating, type the
+review, optionally attach photos, and press Post. It shows on the listing within
+a few minutes.
+
+### Keeping reviews in sync
+
+| Approach | Effort | Cost | Notes |
+|---|---|---|---|
+| **Manual** (current) | Copy real reviews into the cards | Free | Full design control, but you update it yourself |
+| **Widget** — Elfsight, Trustindex, EmbedSocial, Featurable | Paste an embed snippet | Free tier with their badge, roughly $5–10/mo without | Syncs new reviews automatically |
+| **Google Places API** | Needs a key, a billing account and a serverless proxy so the key stays private | Free tier, then per-call | Official, but returns only ~5 reviews |
+
+The cards are plain HTML — copy an `<article class="review">` block to add one,
+delete a block to remove one. The grid handles 1, 2, 3 or more.
+
 ## Content to edit before going live
 
 Placeholders in `index.html`:
@@ -186,4 +246,4 @@ Placeholders in `index.html`:
 - phone `+91 98765 43210`, email `amit@akfitness.in`, handle `@flowline.bosss`
 - the `#` social links in the header and footer
 - prices — ₹799 / ₹1,499 / ₹2,499 per session, written as `&#8377;` entities
-- the two testimonials (Rahul Verma, Sneha Kulkarni)
+- the three Google review cards + the 5.0 rating (see "Google reviews" above)

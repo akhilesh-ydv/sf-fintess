@@ -71,7 +71,7 @@ h1,h2,h3,h4{ margin:0; font-family:var(--font-display); }
 .section{ padding:clamp(70px,8.5vw,120px) 0; }
 
 /* anchor jumps must clear the fixed header */
-#about,#services,#gallery,#testimonials,#social,#contacts{ scroll-margin-top:72px; }
+#about,#services,#gallery,#reviews,#social,#contacts{ scroll-margin-top:72px; }
 
 /* ---------- type ---------- */
 .eyebrow{
@@ -178,7 +178,7 @@ h1,h2,h3,h4{ margin:0; font-family:var(--font-display); }
   color:var(--accent);
 }
 
-.nav{ display:flex; gap:30px; }
+.nav{ display:flex; gap:26px; }
 .nav-link{
   position:relative;
   font-size:11.5px;
@@ -1117,4 +1117,133 @@ h1,h2,h3,h4{ margin:0; font-family:var(--font-display); }
   .hero-actions .btn{ width:100%; }
   .rail-item{ width:70vw; }
   .feature-frame{ aspect-ratio:3/4; }
+}
+
+/* =========================================================
+   GOOGLE REVIEWS
+   ========================================================= */
+.reviews{ background:var(--bg-2); border-top:1px solid var(--line); }
+
+.reviews-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:28px;
+  max-width:none;
+}
+
+.rating-card{
+  display:flex;
+  align-items:center;
+  gap:clamp(18px,3vw,34px);
+  padding:20px 24px;
+  border:1px solid var(--line-strong);
+  border-radius:12px;
+  background:var(--bg-3);
+}
+.rating-score{ display:grid; gap:4px; }
+.rating-score b{
+  font-family:var(--font-display);
+  font-size:38px;
+  font-weight:800;
+  line-height:1;
+}
+.rating-score small{
+  font-size:10.5px;
+  font-weight:500;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+}
+.rating-actions{ display:flex; flex-wrap:wrap; gap:10px; }
+
+/* star rows */
+.stars{ display:inline-flex; gap:3px; }
+.stars svg{ width:17px; height:17px; fill:#f5b301; }
+.stars-sm svg{ width:14px; height:14px; }
+
+/* review cards */
+.review-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  margin-top:clamp(28px,3.5vw,44px);
+}
+.review{
+  display:grid;
+  gap:14px;
+  align-content:start;
+  padding:26px 24px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--bg);
+  transition:transform .45s var(--ease), border-color .45s var(--ease);
+}
+.review:hover{ transform:translateY(-5px); border-color:rgba(255,31,75,.3); }
+
+.review-top{ display:flex; align-items:center; gap:12px; }
+.review-avatar{
+  display:grid;
+  place-items:center;
+  width:40px; height:40px;
+  border-radius:50%;
+  background:linear-gradient(150deg,var(--accent),var(--accent-deep));
+  font-family:var(--font-display);
+  font-size:16px;
+  font-weight:800;
+  color:#fff;
+}
+.review-who{ display:grid; margin-right:auto; }
+.review-who b{
+  font-family:var(--font-display);
+  font-size:13.5px;
+  font-weight:700;
+  letter-spacing:.04em;
+  line-height:1.4;
+}
+.review-who small{ font-size:11.5px; font-weight:300; color:var(--text-dim); }
+.review-src{
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:4px 10px;
+}
+.review p{
+  margin:0;
+  font-size:14.5px;
+  font-weight:300;
+  line-height:1.8;
+  color:var(--text-soft);
+}
+
+.review-foot{
+  margin:clamp(26px,3vw,38px) 0 0;
+  text-align:center;
+  font-size:14px;
+  color:var(--text-dim);
+}
+.review-foot a{
+  color:var(--accent);
+  font-weight:500;
+  border-bottom:1px solid transparent;
+  transition:border-color .3s var(--ease);
+}
+.review-foot a:hover{ border-bottom-color:var(--accent); }
+
+@media (max-width:1040px){
+  .review-grid{ grid-template-columns:1fr 1fr; }
+  .review-grid .review:last-child{ grid-column:1 / -1; }
+}
+@media (max-width:760px){
+  .reviews-head{ flex-direction:column; align-items:stretch; }
+  .rating-card{ flex-direction:column; align-items:flex-start; gap:16px; }
+  .rating-actions{ width:100%; }
+  .rating-actions .btn{ flex:1 1 auto; }
+  .review-grid{ grid-template-columns:1fr; }
+  .review-grid .review:last-child{ grid-column:auto; }
 }
