@@ -30,6 +30,26 @@ python -m http.server 8000
 Then open `http://localhost:8000/` — the URL shows no `.html` because
 `index.html` is served as the folder root.
 
+## Hosting
+
+Domain: **amitkumarfitness.in**
+
+Host on **Cloudflare Pages**, not Vercel. Vercel's free Hobby plan forbids
+commercial use, and their fair-use terms count "being paid to build the site"
+as commercial — a client site does not belong there. Cloudflare Pages allows
+commercial use on the free plan and does not meter bandwidth, which matters
+here because of the 6 MB feature clip.
+
+- `_headers` carries the cache rules on Cloudflare.
+- `vercel.json` is kept for reference but is ignored by Cloudflare.
+- Clean URLs work by default on Pages, so `.htaccess` stays unused too.
+- Build settings: **no build command**, output directory `/` (this is plain
+  HTML — there is nothing to compile).
+
+`assets/img/_originals/` is skipped by `.vercelignore`, which Cloudflare does
+not read, so those source files get uploaded there. Nothing links to them and
+they are never served, so it costs storage and not speed.
+
 ## Keeping `.html` out of URLs
 
 - The homepage is already extensionless: `/`.
@@ -288,7 +308,7 @@ Placeholders in `index.html`:
 
 - name **Amit Kumar** (title, meta description, brand, about heading, footer
   copyright) and the `AK` monogram in `assets/img/favicon.svg`
-- phone `+91 98765 43210`, email `amit@akfitness.in`, handle `@flowline.bosss`
+- phone `+91 98765 43210`, email `amit@amitkumarfitness.in`, handle `@flowline.bosss`
 - the `#` social links in the header and footer
 - prices — ₹799 / ₹1,499 / ₹2,499 per session, written as `&#8377;` entities
 - the three Google review cards + the 5.0 rating (see "Google reviews" above)
